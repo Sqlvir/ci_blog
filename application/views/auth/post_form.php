@@ -183,7 +183,7 @@
                   <p class="card-description">
                     Add Post Form
                   </p>
-                  <form class="forms-sample" id="post_form" name="post_form" action="<?php print site_url();?>auth/addPost" method="post" enctype="multipart/form-data">
+                  <form class="forms-sample" id="post_form" name="post_form" action="<?php print site_url();?>auth/addPost" method="post">
                     <div class="form-group">
                       <div class="row">
                        <div class="col-6">

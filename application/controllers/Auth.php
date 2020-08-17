@@ -142,7 +142,7 @@ class Auth extends CI_Controller {
         $data = array();
         $data['metaDescription'] = 'Add Post Form';
         $data['metaKeywords'] = 'Add Post Form';
-        $data['title'] = "AddPostForm";
+        $data['title'] = "Add Post Form";
         $data['breadcrumbs'] = array('Add Post Form' => '#');
         $this->load->view('auth/post_form', $data);
     }
@@ -199,38 +199,38 @@ class Auth extends CI_Controller {
     }
 
     //Post Edit method
-    public function post_edit($id)
+    public function getdetails($pid)
     {
-        $item = $this->auth->edit_item($id);
-        //log_message('debug',print_r($item,TRUE));
-        $data = array('Post'=>$item);
-        $data['metaDescription'] = 'post edit';
-        $data['metaKeywords'] = 'post edit';
-        $data['title'] = "Post Edit";
-        //$data['breadcrumbs'] = array('post edit' => $id);
-        //log_message('debug',print_r($data,TRUE));
-        $this->load->view('auth/post_edit', $data);
+        $reslt=$this->auth->getpostdetail($pid);
+        // Passing Values to update view
+        $this->load->view('auth/post_edit',['row'=>$reslt]);
+    } 
+    
+    public function updatedetails()
+    {
+        $this->form_validation->set_rules('post_title','Post Title','required');
+        $this->form_validation->set_rules('post_author','Post Author','required');
+        $this->form_validation->set_rules('describe','Post Description','required');
+        if($this->form_validation->run())
+        {
+            $postTitle=$this->input->post('post_title');
+            $postAuthor=$this->input->post('post_author');
+            $Describe=$this->input->post('describe');
+            $psid=$this->input->post('postid');
+            $this->auth->updatedetails($postTitle,$postAuthor,$Describe,$psid);
+        } 
+        else 
+        {
+             $this->session->set_flashdata('error', 'Somthing went worng. Try again with valid details !!');
+             redirect('auth/post_list');
+        }
     }
 
-    public function post_update($id)
+    public function delete($pid)
     {
-        $this->form_validation->set_rules('post_title', 'Post Title');
-        $this->form_validation->set_rules('post_author', 'Author Name');
-        $this->form_validation->set_rules('describe', 'Describe');
-        
-        if($this->form_validation->run() == FALSE)
-        {
-            $this->session->set_flashdata('error', 'Post are not updated');
-            redirect('auth/post_edit/'.$id);
-        }
-        else
-        {
-          $this->auth->update_item($id);
-          $this->session->set_flashdata('success', 'Post updated successfully');
-          redirect('auth/post_list');
-        }
+        $this->auth->deleterow($pid);
+        $this->load->view('auth/post_list');
     }
-    
 }
 
 

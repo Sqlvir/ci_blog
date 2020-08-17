@@ -150,24 +150,50 @@ class Auth_model extends CI_Model {
         return $posts;
     }
 
-    public function edit_item($id)
+    public function getpostdetail($pid){
+		$ret=$this->db->select('title,author,description,post_id')
+		              ->where('post_id',$pid)
+		              ->get('posts');
+		        return $ret->row();
+    }
+    
+    public function updatedetails($postTitle,$postAuthor,$Describe,$psid)
     {
-        return $this->db->get_where('posts', array('post_id' => $id))->row();
+        $update_data=array(
+                    'title'=>$postTitle,
+                    'author'=>$postAuthor,
+                    'description'=>$Describe,
+                );
+        $query_data=$this->db->where('post_id', $psid)
+                        ->update('posts', $update_data);
+        log_message('debug',print_r($update_data,TRUE));
+        if($query_data)
+        {
+            $this->session->set_flashdata('success', 'Record updated successful');
+            redirect('auth/post_list');
+        }
+        else
+        {
+            $this->session->set_flashdata('error', 'Somthing went worng. Error!!');
+            redirect('auth/post_edit');
+        }
+
     }
 
-    public function update_item($id) 
+    public function deleterow($pid)
     {
-        $data=array(
-            'title' => $this->input->post('post_title'),
-            'author' => $this->input->post('post_author'),
-            'description'=> $this->input->post('describe')
-        );
-        if($id==0){
-            return $this->db->insert('posts',$data);
-        }else{
-            $this->db->where('post_id',$id);
-            return $this->db->update('posts',$data);
-        }        
+        $sql_query=$this->db->where('post_id', $pid)
+                        ->delete('posts');
+        if($sql_query)
+        {
+            $this->session->set_flashdata('success', 'Record delete successfully');
+            redirect('auth/post_list');
+        }
+        else
+        {
+            $this->session->set_flashdata('error', 'Somthing went worng. Error!!');
+            redirect('auth/post_list');
+        }
     }
 
 }

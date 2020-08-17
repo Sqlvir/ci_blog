@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title><?php print $title; ?></title>
+  <title>Post Edit</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="<?= base_url("assets/vendors/mdi/css/materialdesignicons.min.css");?>">
   <link rel="stylesheet" href="<?= base_url("assets/vendors/base/vendor.bundle.base.css");?>">
@@ -167,27 +167,29 @@
                   <p class="card-description">
                     Edit Post Form
                   </p>
-                  <form class="forms-sample" id="post_form" name="post_form" action="<?php print site_url();?>auth/post_update" method="post">
                   
+                  <form class="forms-sample" id="updatedata" name="updatedata" action="<?php print site_url();?>auth/updatedetails" method="post">
+                    <?php echo form_hidden('postid',$row->post_id) ?>
                     <div class="form-group">
                       <div class="row">
                        <div class="col-6">
                         <label for="exampleInputName1">Title</label>
-                        <input type="text" class="form-control" name="post_title" id="post_title" value="<?php echo set_value('title') ?>" placeholder="Post Title">
+                        <input type="text" class="form-control" name="post_title" id="post_title" value="<?php echo set_value('post_title',$row->title); ?>">
                        </div>
                        <div class="col-6">
                          <label for="exampleInputName1">Author Name</label>
-                         <input type="text" class="form-control" name="post_author" id="post_author" value="<?php echo set_value('author') ?>" placeholder="Author Name">
+                         <input type="text" class="form-control" name="post_author" id="post_author" value="<?php echo set_value('post_author',$row->author); ?>">
                        </div>
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="exampleTextarea1">Description</label>
-                      <textarea class="form-control" rows="3" cols="70" name="describe" placeholder="Description" value="<?php echo set_value('describe') ?>" id="describe"></textarea>
+                      <textarea class="form-control" rows="3" cols="70" name="describe" id="describe"><?php echo set_value('describe',$row->description); ?></textarea>
                     </div>    
                       <button type="submit" class="btn btn-primary mr-2">Update Post</button>
                       <button class="btn btn-light">Cancel</button>
                     </form>
+                    
                   </div>
                 </div>
             </div>

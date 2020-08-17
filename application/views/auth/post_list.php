@@ -258,8 +258,8 @@
                             <td><?php echo $post['author'] ?></td>
                             <td><?php echo $post['created_at'] ?></td>
                             <td>
-                                <a class="btn btn-primary" href="<?php echo base_url().'auth/post_edit/'.$post['post_id']; ?>" role="button">Edit</a>
-                                <a class="btn btn-danger" href="#" role="button">Delete</a>
+                                <a class="btn btn-primary" href="<?php echo base_url().'auth/getdetails/'.$post['post_id']; ?>" role="button">Edit</a>
+                                <a class="btn btn-danger" href="<?php echo base_url().'auth/delete/'.$post['post_id']; ?>" role="button">Delete</a>
                             </td>
                         </tr>
                       <?php
